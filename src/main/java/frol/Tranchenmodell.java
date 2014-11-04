@@ -13,7 +13,7 @@ public class Tranchenmodell {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tranchenmodell", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Tranche> tranchen = new ArrayList<>();
 
-    @OneToOne(optional = true, fetch = FetchType.EAGER)
+    @OneToOne(optional = true, fetch = FetchType.LAZY)
     private Preisregelung preisregelung;
 
 

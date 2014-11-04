@@ -53,13 +53,13 @@ public class H2Test {
         assert !em.contains(tranchenmodell);
 
         System.out.println("*********** START DELETE");
-        em.flush(); // no SQL DELETE in log!
+        em.flush();
         System.out.println("*********** END DELETE");
 
         em.clear();
 
         tranchenmodell = em.find(Tranchenmodell.class, 1951L);
-        assert tranchenmodell == null; // assert fails here: tranchenmodell hasn't been removed
+        assert tranchenmodell == null;
 
         Tranche tranche1 = em.find(Tranche.class, 1951L);
         assert tranche1 == null;
@@ -108,16 +108,21 @@ public class H2Test {
     }
 
 
+    /**
+     * This test will fail with (foreign key) ConstraintViolationException:
+     * Tranchenmodell is beeing deteted before Tranche.
+     */
     @Test
     public void removeOrphanTranchenmodell() {
         Preisregelung preisregelung = em.find(Preisregelung.class, 17960L);
         assert preisregelung != null;
         assert preisregelung.getTranchenmodell() != null;
 
+        preisregelung.getTranchenmodell().setPreisregelung(null);
         preisregelung.setTranchenmodell(null);
 
         System.out.println("*********** START DELETE");
-        em.flush();
+        em.flush(); // ConstraintViolationException: Tranchenmodell is beeing deteted before Tranche
         System.out.println("*********** END DELETE");
         em.clear();
 
