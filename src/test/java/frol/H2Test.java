@@ -139,7 +139,7 @@ public class H2Test {
     public void removePreisregelung() {
         Preisregelung preisregelung = em.find(Preisregelung.class, 17960L);
         assert preisregelung != null;
-        assert preisregelung.getTranchenmodell() != null;
+        //assert preisregelung.getTranchenmodell() != null;
 
         em.remove(preisregelung);
 
@@ -148,6 +148,8 @@ public class H2Test {
         System.out.println("*********** END DELETE");
         em.clear();
 
+        preisregelung = em.find(Preisregelung.class, 17960L);
+        assert  preisregelung == null;
         Tranchenmodell tranchenmodell = em.find(Tranchenmodell.class, 1951L);
         assert tranchenmodell == null;
         Tranche tranche1 = em.find(Tranche.class, 1951L);
